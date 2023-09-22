@@ -56,3 +56,106 @@ const Empty: FC = () => {
 };
 
 export default Empty;
+//   const columns = [
+//     {
+//       title: "ID",
+//       dataIndex: "id",
+//       key: "id",
+//       width: 100,
+//     },
+//     {
+//       title: "Image",
+//       dataIndex: "thumbnailUrl",
+//       key: "thumbnailUrl",
+//       width: 100,
+//       render: (thumbnailUrl: string) => (
+//         <img src={thumbnailUrl} alt="Thumbnail" style={{ width: "50px" }} />
+//       ),
+//     },
+//     {
+//       title: "Title",
+//       dataIndex: "title",
+//       key: "title",
+//       width: 150,
+//       render: (text: string) => (
+//         <Tooltip title={text}>
+//           <div>{text.slice(0, 15)}</div>
+//         </Tooltip>
+//       ),
+//     },
+//     {
+//       title: "Cross Number",
+//       dataIndex: "crossNumber",
+//       key: "crossNumber",
+//       width: 150,
+//     },
+//     {
+//       title: "Part Number",
+//       dataIndex: "partNumber",
+//       key: "partNumber",
+//       width: 150,
+//     },
+//     {
+//       title: "Part Number",
+//       dataIndex: "partNumber",
+//       key: "partNumber",
+//       width: 150,
+//     },
+//     {
+//       title: "Part Number",
+//       dataIndex: "partNumber",
+//       key: "partNumber",
+//       width: 150,
+//     },
+//     {
+//       title: "Part Number",
+//       dataIndex: "partNumber",
+//       key: "partNumber",
+//       width: 150,
+//     },
+//     {
+//       title: "Part Number",
+//       dataIndex: "partNumber",
+//       key: "partNumber",
+//       width: 150,
+//     },
+//     {
+//       title: "Part Number",
+//       dataIndex: "partNumber",
+//       key: "partNumber",
+//       width: 150,
+//     },
+//     {
+//       title: "Part Number",
+//       dataIndex: "partNumber",
+//       key: "partNumber",
+//       width: 150,
+//     },
+//     {
+//       title: "Part Number",
+//       dataIndex: "partNumber",
+//       key: "partNumber",
+//       width: 150,
+//     },
+//     {
+//       title: "Part Number",
+//       dataIndex: "partNumber",
+//       key: "partNumber",
+//       width: 150,
+//     },
+
+//     {
+//       title: "Ashgabat",
+//       key: "operation",
+//       fixed: "right",
+//       width: 100,
+//       render: () => <a>action</a>,
+//     },
+//     {
+//       title: "Moscov",
+//       key: "operation",
+//       fixed: "right",
+//       width: 100,
+//       render: () => <a>action</a>,
+//     },
+//   ];

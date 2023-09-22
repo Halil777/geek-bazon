@@ -1,7 +1,7 @@
 import { SettingFilled } from "@ant-design/icons";
 import { Menu, Dropdown, Space, Switch, Tooltip, Typography } from "antd";
 import { ClickParam } from "antd/lib/menu/index";
-
+import SettingModal from "./SettingModal";
 const { SubMenu } = Menu;
 
 const stocks = [
@@ -50,13 +50,7 @@ const items = [
   },
   {
     key: "4",
-    label: (
-      <SubMenu title={<Typography>My Stocks</Typography>} key="stocks">
-        {stocks.map((stock) => (
-          <Menu.Item key={stock.key}>{stock.label}</Menu.Item>
-        ))}
-      </SubMenu>
-    ),
+    label: <SettingModal />,
   },
 ];
 
