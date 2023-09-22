@@ -1,9 +1,9 @@
-import { Button, Card, Col, Row, Space } from "antd";
+import { Button, Card, Col, Row, Space, Typography } from "antd";
 import { FC } from "react";
 import { gridStyle } from "./headerStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTable } from "../../redux/catalog/catalogSlice";
-import { RootState } from "../../redux/store"; // Import RootState from your store
+import { RootState } from "../../redux/store";
 
 const CatalogHeader: FC = () => {
   const dispatch = useDispatch();
@@ -28,6 +28,9 @@ const CatalogHeader: FC = () => {
       <Row>
         <Col span={12}>
           <Space size={30}>
+            <Typography style={{ fontSize: "22px", fontWeight: 700 }}>
+              Goods and Services
+            </Typography>
             <Button
               onClick={autoPartsTable}
               type={selectedTable === "first" ? "primary" : "text"} // Check if the first table is selected

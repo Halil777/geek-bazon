@@ -9,6 +9,7 @@ const Catalog: FC = () => {
   const selectedTable = useSelector(
     (state: RootState) => state.catalog.selectedTable
   );
+
   return (
     <div
       style={{

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface CatalogState {
-  selectedTable: string | null; // Stores the selected table name
+  selectedTable: string | null;
 }
 
 const initialState: CatalogState = {

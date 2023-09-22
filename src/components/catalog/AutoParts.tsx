@@ -9,7 +9,11 @@ import {
   Input,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { FileSyncOutlined, SettingFilled } from "@ant-design/icons";
+import {
+  ExportOutlined,
+  FileSyncOutlined,
+  SettingFilled,
+} from "@ant-design/icons";
 import {
   fetchAutoParts,
   selectAutoParts,
@@ -18,6 +22,11 @@ import {
   generateRandomAlphanumeric,
   generateRandomNumbers,
 } from "./generateNumbers";
+import SettingsMenu from "./SettingsMenu";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import LoadingCatalog from "./LoadingCatalog";
+import AutoPartsColumns from "./AutoPartsColumns";
 
 const { Search } = Input;
 
@@ -32,143 +41,8 @@ const AutoParts: FC = () => {
     }
   }, [status, dispatch]);
 
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      width: 100,
-    },
-    {
-      title: "Image",
-      dataIndex: "thumbnailUrl",
-      key: "thumbnailUrl",
-      width: 100,
-      render: (thumbnailUrl: string) => (
-        <img src={thumbnailUrl} alt="Thumbnail" style={{ width: "50px" }} />
-      ),
-    },
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-      width: 150,
-      render: (text: string) => (
-        <Tooltip title={text}>
-          <div>{text.slice(0, 15)}</div>
-        </Tooltip>
-      ),
-    },
-    {
-      title: "Cross Number",
-      dataIndex: "crossNumber",
-      key: "crossNumber",
-      width: 150,
-    },
-    {
-      title: "Part Number",
-      dataIndex: "partNumber",
-      key: "partNumber",
-      width: 150,
-    },
-    {
-      title: "Part Number",
-      dataIndex: "partNumber",
-      key: "partNumber",
-      width: 150,
-    },
-    {
-      title: "Part Number",
-      dataIndex: "partNumber",
-      key: "partNumber",
-      width: 150,
-    },
-    {
-      title: "Part Number",
-      dataIndex: "partNumber",
-      key: "partNumber",
-      width: 150,
-    },
-    {
-      title: "Part Number",
-      dataIndex: "partNumber",
-      key: "partNumber",
-      width: 150,
-    },
-    {
-      title: "Part Number",
-      dataIndex: "partNumber",
-      key: "partNumber",
-      width: 150,
-    },
-    {
-      title: "Part Number",
-      dataIndex: "partNumber",
-      key: "partNumber",
-      width: 150,
-    },
-    {
-      title: "Part Number",
-      dataIndex: "partNumber",
-      key: "partNumber",
-      width: 150,
-    },
-    {
-      title: "Part Number",
-      dataIndex: "partNumber",
-      key: "partNumber",
-      width: 150,
-    },
-
-    {
-      title: "Ashgabat",
-      key: "operation",
-      fixed: "right",
-      width: 100,
-      render: () => <a>action</a>,
-    },
-    {
-      title: "Moscov",
-      key: "operation",
-      fixed: "right",
-      width: 100,
-      render: () => <a>action</a>,
-    },
-  ];
-
   if (status === "loading") {
-    return (
-      <Space direction="vertical" style={{ width: "100%" }} size={30}>
-        <div
-          style={{
-            width: "98%",
-            marginTop: 30,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            right: "50px",
-          }}
-        >
-          <Space size={20}>
-            <AutoComplete
-              style={{ width: 200 }}
-              options={[{ value: "Cross Number" }, { value: "Part Number" }]}
-              placeholder="Search Cross or Part Number"
-              onChange={(value) => setSearchText(value)}
-              value={searchText}
-            />
-            <Button type="text" icon={<FileSyncOutlined />}>
-              Search for anything
-            </Button>
-          </Space>
-
-          <Tooltip title="Settings">
-            <SettingFilled style={{ fontSize: "20px", cursor: "pointer" }} />
-          </Tooltip>
-        </div>
-        <Skeleton active />
-      </Space>
-    );
+    return <LoadingCatalog />;
   }
 
   if (status === "failed") {
@@ -185,6 +59,37 @@ const AutoParts: FC = () => {
     crossNumber: randomNumbers[index].crossNumber,
     partNumber: randomAlphanumeric[index].partNumber,
   }));
+
+  // Determine the screen height
+  const isExtraLargeScreen = window.matchMedia("(min-width: 1600px)").matches;
+
+  // Conditionally set the y value for the Table
+  const tableY = isExtraLargeScreen ? 700 : 400;
+  const handleExportTable = () => {
+    // Create a new workbook
+    const wb = XLSX.utils.book_new();
+
+    // Create a worksheet
+    const ws = XLSX.utils.json_to_sheet(combinedData);
+
+    // Add the worksheet to the workbook
+    XLSX.utils.book_append_sheet(wb, ws, "AutoParts");
+
+    // Generate a blob from the workbook
+    const blob = XLSX.write(wb, { bookType: "blob" });
+
+    // Create a Blob object
+    const blobObject = new Blob([blob], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    // Save the Blob object as a file
+    saveAs(blobObject, "AutoParts.xlsx");
+  };
+
+  const handleActionClick = () => {
+    // Your action handling code here
+  };
 
   return (
     <Space direction="vertical" style={{ width: "100%" }} size={30}>
@@ -209,15 +114,28 @@ const AutoParts: FC = () => {
           </Button>
         </Space>
 
-        <Tooltip title="Settings">
-          <SettingFilled style={{ fontSize: "20px", cursor: "pointer" }} />
-        </Tooltip>
+        <SettingsMenu />
       </div>
-      <Table
-        columns={columns}
-        dataSource={combinedData}
-        scroll={{ x: 1500, y: 500 }}
-      />
+      <div style={{ position: "relative" }}>
+        <Table
+          columns={<AutoPartsColumns onActionClick={handleActionClick} />}
+          dataSource={combinedData}
+          scroll={{ x: 1500, y: tableY }}
+        />
+        <Button
+          type="primary"
+          icon={<ExportOutlined />}
+          onClick={handleExportTable}
+          style={{
+            zIndex: 1000,
+            position: "fixed",
+            bottom: 0,
+            right: 20,
+          }}
+        >
+          Export table
+        </Button>
+      </div>
     </Space>
   );
 };

@@ -1,9 +1,12 @@
+import { Card, Typography } from "antd";
 import React from "react";
 
 const ClientsHeader: React.FC = () => {
   return (
     <div>
-      <h1>Clients Page Header</h1>
+      <Card hoverable>
+        <Typography>Clients header</Typography>
+      </Card>
     </div>
   );
 };

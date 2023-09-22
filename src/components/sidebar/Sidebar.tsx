@@ -7,7 +7,7 @@ import SidebarMenuItems from ".";
 const { Content, Sider } = Layout;
 
 const Sidebar: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const location = useLocation();
   const currentPage = location.pathname;
 
