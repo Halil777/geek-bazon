@@ -1,10 +1,13 @@
 import { FC } from "react";
-import Empty from "../../components/empty/Empty";
+import { padding } from "../../style/common/padding";
+import ReturnFilter from "../../components/return/ReturnFilter";
+import ReturnTable from "../../components/return/ReturnTable";
 
 const Returns: FC = () => {
   return (
-    <div>
-      <Empty />
+    <div style={padding}>
+      <ReturnFilter />
+      <ReturnTable />
     </div>
   );
 };

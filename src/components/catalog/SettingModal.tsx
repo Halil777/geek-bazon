@@ -1,8 +1,12 @@
 import { useState, FC } from "react";
-import { Modal, Space, Button, Typography, Divider, Row, Col } from "antd";
+import { Modal, Typography, Divider, Row, Col, Tooltip } from "antd";
 import { SettingFilled } from "@ant-design/icons";
 
-const SettingModal: FC = () => {
+interface SettingModalProps {
+  activeColumns: boolean; // Indicates whether columns are active or passive
+}
+
+const SettingModal: FC<SettingModalProps> = ({ activeColumns }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -16,6 +20,53 @@ const SettingModal: FC = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      width: 100,
+    },
+    {
+      title: "Image",
+      dataIndex: "thumbnailUrl",
+      key: "thumbnailUrl",
+      width: 100,
+      render: (thumbnailUrl: string) => (
+        <img src={thumbnailUrl} alt="Thumbnail" style={{ width: "50px" }} />
+      ),
+      show: activeColumns,
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      width: 150,
+      render: (text: string) => (
+        <Tooltip title={text}>
+          <div>{text.slice(0, 15)}</div>
+        </Tooltip>
+      ),
+    },
+    {
+      title: "Cross Number",
+      dataIndex: "crossNumber",
+      key: "crossNumber",
+      width: 150,
+      show: activeColumns,
+    },
+    {
+      title: "Part Number",
+      dataIndex: "partNumber",
+      key: "partNumber",
+      width: 150,
+    },
+    // ... other columns ...
+  ];
+
+  const activeColumnsData = columns.filter((column) => column.show);
+  const passiveColumnsData = columns.filter((column) => !column.show);
 
   return (
     <>
@@ -44,15 +95,23 @@ const SettingModal: FC = () => {
         <Divider />
         <Row>
           <Col span={11}>
-            <Typography>Active</Typography>
+            <Typography>
+              {activeColumns ? "Active Columns :" : "Passive Columns :"}
+            </Typography>
+            {activeColumnsData.map((column, index) => (
+              <div key={index}>{column.title}</div>
+            ))}
           </Col>
           <Divider type="vertical" style={{ height: "100vh" }} />
           <Col span={11}>
             <Typography
               style={{ color: "gray", fontSize: "23px", fontWeight: 700 }}
             >
-              Passive
+              {activeColumns ? "Passive Columns :" : "Active Columns :"}
             </Typography>
+            {passiveColumnsData.map((column, index) => (
+              <div key={index}>{column.title}</div>
+            ))}
           </Col>
         </Row>
         <Divider />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "antd";
+import { Menu, Tooltip } from "antd";
 import { Link, useLocation } from "react-router-dom";
 
 import { menuItems } from "./interface";
@@ -36,9 +36,13 @@ const SidebarMenuItems: React.FC<{ collapsed: boolean }> = ({ collapsed }) => {
     <Menu theme="dark" mode="inline" defaultSelectedKeys={[selectedKey]}>
       {menuItems.map((menuItem) => (
         <Menu.Item key={menuItem.id} icon={menuItem.icon}>
-          <Link to={menuItem.path}>
-            {!collapsed && <span>{menuItem.label}</span>}
-          </Link>
+          {collapsed ? (
+            <Tooltip title={menuItem.label}>
+              <Link to={menuItem.path}></Link>
+            </Tooltip>
+          ) : (
+            <Link to={menuItem.path}>{menuItem.label}</Link>
+          )}
         </Menu.Item>
       ))}
     </Menu>

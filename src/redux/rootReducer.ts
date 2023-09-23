@@ -5,6 +5,7 @@ import clientsTablesReducer from "./clients/clientTablesSlice";
 import activeSalesComponentReducer from "./sales/salesActiveButtonSlice";
 import referenceReducer from "./reference/referenceSlice";
 import settingsReducer from "./catalog/settingsSlice";
+import columnsReducer from "./catalog/columnsSlice";
 
 const rootReducer = combineReducers({
   autoParts: autoPartsReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   salesActiveButton: activeSalesComponentReducer,
   referenceActive: referenceReducer,
   settings: settingsReducer,
+  columns: columnsReducer,
 });
 
 export default rootReducer;

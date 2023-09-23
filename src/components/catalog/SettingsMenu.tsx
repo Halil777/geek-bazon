@@ -1,60 +1,36 @@
-import { SettingFilled } from "@ant-design/icons";
-import { Menu, Dropdown, Space, Switch, Tooltip, Typography } from "antd";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Dropdown, Menu, Space, Switch, Tooltip, Typography } from "antd";
 import { ClickParam } from "antd/lib/menu/index";
 import SettingModal from "./SettingModal";
-const { SubMenu } = Menu;
+import {
+  setShowCrossNumberColumn,
+  setShowImageColumn,
+} from "../../redux/catalog/columnsSlice";
+import { RootState } from "../../redux/store";
+import { SettingFilled } from "@ant-design/icons";
 
-const stocks = [
-  {
-    key: "1",
-    label: (
-      <Space style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography>Ashgabat</Typography>
-        <Switch />
-      </Space>
-    ),
-  },
-  {
-    key: "2",
-    label: (
-      <Space style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography>Moscov</Typography>
-        <Switch />
-      </Space>
-    ),
-  },
-];
-
-const items = [
-  {
-    key: "1",
-    label: (
-      <Space style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography>Remove Image</Typography>
-        <Switch />
-      </Space>
-    ),
-  },
-  {
-    key: "2",
-    label: (
-      <Space style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography>Remove Cross Number</Typography>
-        <Switch />
-      </Space>
-    ),
-  },
-  {
-    key: "3",
-    label: <Menu.Divider />,
-  },
-  {
-    key: "4",
-    label: <SettingModal />,
-  },
-];
+type SettingModalProps = {
+  activeColumns?: boolean; // Make it optional
+};
 
 const SettingsMenu: React.FC = () => {
+  const dispatch = useDispatch();
+  const showImageColumn = useSelector(
+    (state: RootState) => state.columns.showImageColumn
+  );
+  const showCrossNumberColumn = useSelector(
+    (state: RootState) => state.columns.showCrossNumberColumn
+  );
+
+  const handleImageSwitchChange = (checked: boolean) => {
+    dispatch(setShowImageColumn(checked));
+  };
+
+  const handleCrossNumberSwitchChange = (checked: boolean) => {
+    dispatch(setShowCrossNumberColumn(checked));
+  };
+
   const handleMenuClick = (params: ClickParam) => {
     console.log("Menu clicked:", params);
   };
@@ -64,9 +40,31 @@ const SettingsMenu: React.FC = () => {
       overlayStyle={{ width: 300 }}
       overlay={
         <Menu onClick={handleMenuClick} mode="vertical">
-          {items.map((item) => (
-            <Menu.Item key={item.key}>{item.label}</Menu.Item>
-          ))}
+          <Menu.Item key="1">
+            <Space style={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography>Remove Image</Typography>
+              <Switch
+                checked={showImageColumn}
+                onChange={handleImageSwitchChange}
+              />
+            </Space>
+          </Menu.Item>
+          <Menu.Item key="2">
+            <Space style={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography>Remove Cross Number</Typography>
+              <Switch
+                checked={showCrossNumberColumn}
+                onChange={handleCrossNumberSwitchChange}
+              />
+            </Space>
+          </Menu.Item>
+          <Menu.Divider />
+          <Menu.Item key="3">
+            <div></div>
+          </Menu.Item>
+          <Menu.Item key="4">
+            <SettingModal activeColumns={true} />
+          </Menu.Item>
         </Menu>
       }
       placement="bottomRight"

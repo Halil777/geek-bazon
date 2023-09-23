@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Space, Button, Table, Tooltip, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { ExportOutlined, FileSyncOutlined } from "@ant-design/icons";
+import { FileSyncOutlined } from "@ant-design/icons";
 import {
   fetchAutoParts,
   selectAutoParts,
@@ -11,6 +11,7 @@ import {
   generateRandomNumbers,
 } from "./generateNumbers";
 import SettingsMenu from "./SettingsMenu";
+import { RootState } from "../../redux/store";
 
 const { Search } = Input;
 
@@ -18,8 +19,12 @@ const AutoParts: FC = () => {
   const dispatch = useDispatch<any>();
   const [searchText, setSearchText] = useState("");
   const { data: autoParts, status, error } = useSelector(selectAutoParts);
-  const [showImageColumn, setShowImageColumn] = useState(true);
-  const [showCrossNumberColumn, setShowCrossNumberColumn] = useState(true);
+  const showImageColumn = useSelector(
+    (state: RootState) => state.columns.showCrossNumberColumn
+  );
+  const showCrossNumberColumn = useSelector(
+    (state: RootState) => state.columns.showCrossNumberColumn
+  );
 
   useEffect(() => {
     if (status === "idle") {
@@ -126,12 +131,7 @@ const AutoParts: FC = () => {
             Search for anything
           </Button>
         </Space>
-        <SettingsMenu
-          showImageColumn={showImageColumn}
-          setShowImageColumn={setShowImageColumn}
-          showCrossNumberColumn={showCrossNumberColumn}
-          setShowCrossNumberColumn={setShowCrossNumberColumn}
-        />
+        <SettingsMenu />
       </div>
       <div style={{ position: "relative" }}>
         <Table
