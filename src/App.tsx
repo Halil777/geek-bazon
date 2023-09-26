@@ -8,24 +8,29 @@ import Sales from "./pages/sales/Sales";
 import Service from "./pages/service/Service";
 import Stock from "./pages/stock/Stock";
 import Returns from "./pages/returns/Returns";
+import { ToastContainer } from "react-toastify";
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Sidebar />}>
-            <Route index element={<Catalog />} />
-            <Route path="/clients" element={<Clients />} />
-            <Route path="/returns" element={<Returns />} />
-            <Route path="/incomes" element={<Incomes />} />
-            <Route path="/references" element={<References />} />
-            <Route path="/sales" element={<Sales />} />
-            <Route path="/service" element={<Service />} />
-            <Route path="/stock" element={<Stock />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Sidebar />}>
+              <Route index element={<Catalog />} />
+              <Route path="/clients" element={<Clients />} />
+              <Route path="/returns" element={<Returns />} />
+              <Route path="/incomes" element={<Incomes />} />
+              <Route path="/references" element={<References />} />
+              <Route path="/sales" element={<Sales />} />
+              <Route path="/service" element={<Service />} />
+              <Route path="/stock" element={<Stock />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+        <ToastContainer />
+      </HelmetProvider>
     </>
   );
 }

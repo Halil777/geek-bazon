@@ -4,6 +4,7 @@ import ClientsHeader from "./ClientsHeader";
 import SalesHeader from "./SalesHeader";
 import ReferenceHeader from "./ReferenceHeader";
 import ReturnHeader from "./ReturnHeader";
+import IncomesHeader from "./IncomesHeader";
 
 interface DynamicHeaderProps {
   currentPage: string;
@@ -21,6 +22,8 @@ const DynamicHeader: React.FC<DynamicHeaderProps> = ({ currentPage }) => {
       return <ReferenceHeader />;
     case "/returns":
       return <ReturnHeader />;
+    case "/incomes":
+      return <IncomesHeader />;
     default:
       return null;
   }

@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
   const currentPage = location.pathname;
 
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <Sider
         collapsible
         collapsed={collapsed}

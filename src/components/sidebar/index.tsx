@@ -33,7 +33,12 @@ const SidebarMenuItems: React.FC<{ collapsed: boolean }> = ({ collapsed }) => {
   const selectedKey = getKeyFromPath(location.pathname);
 
   return (
-    <Menu theme="dark" mode="inline" defaultSelectedKeys={[selectedKey]}>
+    <Menu
+      theme="dark"
+      mode="inline"
+      style={{ minHeight: "100vh" }}
+      defaultSelectedKeys={[selectedKey]}
+    >
       {menuItems.map((menuItem) => (
         <Menu.Item key={menuItem.id} icon={menuItem.icon}>
           {collapsed ? (
