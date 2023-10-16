@@ -9,6 +9,8 @@ import columnsReducer from "./catalog/columnsSlice";
 import sliceReducer from "./incomes/incomesSlice";
 import componentsReducer from "./incomes/componentsSlice";
 import incomesSidebarReducer from "./incomes/incomesSidebarSlice";
+import serviceActiveComponentReducer from "./service/serviceActiveComponentSlice";
+import sparePartNamesReducer from "./service/sparePartNamesReducer";
 
 const rootReducer = combineReducers({
   autoParts: autoPartsReducer,
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   incomes: sliceReducer,
   components: componentsReducer,
   incomesSidebar: incomesSidebarReducer,
+  serviceActiveComponent: serviceActiveComponentReducer,
+  sparePartNames: sparePartNamesReducer,
 });
 
 export default rootReducer;

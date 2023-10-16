@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { Space, Button, Table, Tooltip, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { FileSyncOutlined } from "@ant-design/icons";
@@ -12,10 +12,13 @@ import {
 } from "./generateNumbers";
 import SettingsMenu from "./SettingsMenu";
 import { RootState } from "../../redux/store";
+import { useDownloadExcel } from "react-export-table-to-excel";
 
 const { Search } = Input;
 
 const AutoParts: FC = () => {
+  const tableRef = useRef(null);
+
   const dispatch = useDispatch<any>();
   const [searchText, setSearchText] = useState("");
   const { data: autoParts, status, error } = useSelector(selectAutoParts);
@@ -25,6 +28,26 @@ const AutoParts: FC = () => {
   const showCrossNumberColumn = useSelector(
     (state: RootState) => state.columns.showCrossNumberColumn
   );
+
+  const randomNumbers = generateRandomNumbers(5000);
+  const randomAlphanumeric = generateRandomAlphanumeric(5000);
+
+  const isExtraLargeScreen = window.matchMedia("(min-width: 1600px)").matches;
+  const tableY = isExtraLargeScreen ? 700 : 400;
+
+  const combinedData = autoParts.map((item, index) => ({
+    ...item,
+    id: index + 1,
+    crossNumber: randomNumbers[index].crossNumber,
+    partNumber: randomAlphanumeric[index].partNumber,
+  }));
+
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: tableRef.current,
+    filename: "AutoPartsData",
+    sheet: "AutoParts",
+    data: combinedData, // Provide the actual data source here
+  });
 
   useEffect(() => {
     if (status === "idle") {
@@ -96,19 +119,6 @@ const AutoParts: FC = () => {
     return <div>Error: {error}</div>;
   }
 
-  const randomNumbers = generateRandomNumbers(5000);
-  const randomAlphanumeric = generateRandomAlphanumeric(5000);
-
-  const combinedData = autoParts.map((item, index) => ({
-    ...item,
-    id: index + 1,
-    crossNumber: randomNumbers[index].crossNumber,
-    partNumber: randomAlphanumeric[index].partNumber,
-  }));
-
-  const isExtraLargeScreen = window.matchMedia("(min-width: 1600px)").matches;
-  const tableY = isExtraLargeScreen ? 700 : 400;
-
   return (
     <Space direction="vertical" style={{ width: "100%" }} size={30}>
       <div
@@ -121,6 +131,7 @@ const AutoParts: FC = () => {
           right: "50px",
         }}
       >
+        <Button onClick={onDownload}>Export to Excel</Button>
         <Space size={20}>
           <Search
             placeholder="Input search text"
@@ -135,6 +146,7 @@ const AutoParts: FC = () => {
       </div>
       <div style={{ position: "relative" }}>
         <Table
+          ref={tableRef}
           columns={columns}
           dataSource={combinedData}
           scroll={{ x: 1500, y: tableY }}
