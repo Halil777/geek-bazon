@@ -35,4 +35,10 @@ export const menuItems: MenuItem[] = [
   { id: "6", icon: <WalletOutlined />, label: "Incomes", path: "/incomes" },
   { id: "7", icon: <ToolOutlined />, label: "Service", path: "/service" },
   { id: "8", icon: <DatabaseOutlined />, label: "Stock", path: "/stock" },
+  {
+    id: "9",
+    icon: <DatabaseOutlined />,
+    label: "Analytics",
+    path: "/analytics",
+  },
 ];

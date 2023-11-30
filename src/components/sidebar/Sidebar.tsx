@@ -29,6 +29,8 @@ const Sidebar: React.FC = () => {
         return "7";
       case "/stock":
         return "8";
+      case "/analytics":
+        return "9";
       default:
         return "0";
     }

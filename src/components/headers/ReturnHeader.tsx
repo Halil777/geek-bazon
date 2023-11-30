@@ -1,13 +1,13 @@
 import { Card, Typography } from "antd";
 import { FC } from "react";
 import { gridStyle } from "./headerStyle";
-import { titleName } from "../../style/common/title";
+import { headerTitle } from "../../common/headerTitle";
 
 const ReturnHeader: FC = () => {
   return (
     <div>
       <Card style={gridStyle} hoverable>
-        <Typography style={titleName}>Returns</Typography>
+        <Typography style={headerTitle}>Returns</Typography>
       </Card>
     </div>
   );

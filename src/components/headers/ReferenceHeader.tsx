@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { setActiveReference } from "../../redux/reference/referenceSlice";
+import { headerTitle } from "../../common/headerTitle";
 
 const ReferenceHeader: FC = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const ReferenceHeader: FC = () => {
     <div>
       <Card style={gridStyle} hoverable>
         <Space size={30}>
-          <Typography>Reference Page</Typography>
+          <Typography style={headerTitle}>Reference Page</Typography>
           <Button
             onClick={() => dispatch(handleButtonClick("first"))}
             type={activeReference === "first" ? "primary" : "text"}

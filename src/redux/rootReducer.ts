@@ -1,3 +1,4 @@
+// RootState.ts
 import { combineReducers } from "redux";
 import autoPartsReducer from "./catalog/autoPartsSlice";
 import catalogReducer from "./catalog/catalogSlice";
@@ -26,5 +27,7 @@ const rootReducer = combineReducers({
   serviceActiveComponent: serviceActiveComponentReducer,
   sparePartNames: sparePartNamesReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 export default rootReducer;

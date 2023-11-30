@@ -10,6 +10,7 @@ import Stock from "./pages/stock/Stock";
 import Returns from "./pages/returns/Returns";
 import { ToastContainer } from "react-toastify";
 import { HelmetProvider } from "react-helmet-async";
+import Analytics from "./pages/analytics/Analytics";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/sales" element={<Sales />} />
               <Route path="/service" element={<Service />} />
               <Route path="/stock" element={<Stock />} />
+              <Route path="/analytics" element={<Analytics />} />
             </Route>
           </Routes>
         </BrowserRouter>

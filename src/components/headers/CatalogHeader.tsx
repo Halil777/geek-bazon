@@ -4,6 +4,7 @@ import { gridStyle } from "./headerStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTable } from "../../redux/catalog/catalogSlice";
 import { RootState } from "../../redux/store";
+import { headerTitle } from "../../common/headerTitle";
 
 const CatalogHeader: FC = () => {
   const dispatch = useDispatch();
@@ -28,9 +29,7 @@ const CatalogHeader: FC = () => {
       <Row>
         <Col span={12}>
           <Space size={30}>
-            <Typography style={{ fontSize: "22px", fontWeight: 700 }}>
-              Goods and Services
-            </Typography>
+            <Typography style={headerTitle}>Goods and Services</Typography>
             <Button
               onClick={autoPartsTable}
               type={selectedTable === "first" ? "primary" : "text"} // Check if the first table is selected
