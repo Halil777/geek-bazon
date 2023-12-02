@@ -11,6 +11,8 @@ import Returns from "./pages/returns/Returns";
 import { ToastContainer } from "react-toastify";
 import { HelmetProvider } from "react-helmet-async";
 import Analytics from "./pages/analytics/Analytics";
+import Login from "./pages/login/Login";
+import Register from "./pages/sign-in/Register";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
       <HelmetProvider>
         <BrowserRouter>
           <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/" element={<Sidebar />}>
               <Route index element={<Catalog />} />
               <Route path="/clients" element={<Clients />} />
