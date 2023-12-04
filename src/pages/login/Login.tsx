@@ -1,5 +1,4 @@
 import React, { FC, useState } from "react";
-import axios from "axios"; // Import Axios
 import {
   Box,
   Button,
@@ -13,11 +12,15 @@ import {
 } from "@mui/material";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
+import { AxiosInstance } from "../../common/AxiosInstance";
+import { useNavigate } from "react-router-dom";
+import { showError, showSuccess } from "../../common/Alert";
 
 const Login: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -26,23 +29,29 @@ const Login: FC = () => {
     event.preventDefault();
   };
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post(
-        "http://95.85.121.153:45401/auth/login",
-        {
-          name,
-          password,
-        }
-      );
-
-      // Handle the response, e.g., store the token in state or localStorage
-      console.log("Login Successful:", response.data);
-    } catch (error) {
-      // Handle error, e.g., show an error message
-      //   console.error("Login Error:", error.message);
+  function login() {
+    if (name.trim().length <= 0 || password.trim().length <= 0) {
+      alert("Please enter required informations!");
+    } else {
+      AxiosInstance.post("/auth/login", {
+        password: password,
+        name: name,
+      })
+        .then((response) => {
+          if (!response.data.error) {
+            showSuccess("Success");
+            // setIsLoading(false);
+            // sessionStorage.setItem("my_token", response.data.access_token);
+            // sessionStorage.setItem("token", response.data.access_token);
+            navigate("/catalog");
+          }
+        })
+        .catch((err) => {
+          showError(err.toString());
+          //   setIsLoading(false);
+        });
     }
-  };
+  }
 
   return (
     <div>
@@ -90,7 +99,7 @@ const Login: FC = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </FormControl>
-          <Button sx={{ height: 45 }} variant="contained" onClick={handleLogin}>
+          <Button sx={{ height: 45 }} variant="contained" onClick={login}>
             Login
           </Button>
         </Stack>

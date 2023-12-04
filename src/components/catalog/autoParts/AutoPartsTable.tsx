@@ -1,118 +1,92 @@
+import { Stack } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
+import { DownloadTableExcel } from "react-export-table-to-excel";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 70, editable: true },
   {
-    field: "firstName",
-    headerName: "First name",
+    field: "id",
+    headerName: "ID",
+    width: 70,
+    editable: true,
+  },
+  {
+    field: "name",
+    headerName: "Name",
     editable: true,
     resizable: true,
   },
-  { field: "lastName", headerName: "Last name", resizable: true },
   {
-    field: "age",
-    headerName: "Age",
-    type: "number",
+    field: "username",
+    headerName: "Username",
     resizable: true,
   },
   {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
+    field: "email",
+    headerName: "Email",
+    resizable: true,
+  },
+  {
+    field: "address",
+    headerName: "Address",
     sortable: false,
     resizable: true,
     valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+      `${params.row.address.city || ""}, ${params.row.address.street || ""}`,
   },
   {
-    field: "test",
-    headerName: "Test",
+    field: "phone",
+    headerName: "Phone",
     headerClassName: "fixed-header",
     cellClassName: "fixed-cell",
   },
   {
-    field: "test2",
-    headerName: "Test 2",
+    field: "website",
+    headerName: "Website",
     headerClassName: "fixed-header",
     cellClassName: "fixed-cell",
-  },
-];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35, test: 42, test2: 54 },
-  {
-    id: 2,
-    lastName: "Lannister",
-    firstName: "Cersei",
-    age: 42,
-    test: 42,
-    test2: 54,
-  },
-  {
-    id: 3,
-    lastName: "Lannister",
-    firstName: "Jaime",
-    age: 45,
-    test: 42,
-    test2: 54,
-  },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16, test: 42, test2: 54 },
-  {
-    id: 5,
-    lastName: "Targaryen",
-    firstName: "Daenerys",
-    age: null,
-    test: 42,
-    test2: 54,
-  },
-  {
-    id: 6,
-    lastName: "Melisandre",
-    firstName: null,
-    age: 150,
-    test: 42,
-    test2: 54,
-  },
-  {
-    id: 7,
-    lastName: "Clifford",
-    firstName: "Ferrara",
-    age: 44,
-    test: 42,
-    test2: 54,
-  },
-  {
-    id: 8,
-    lastName: "Frances",
-    firstName: "Rossini",
-    age: 36,
-    test: 42,
-    test2: 54,
-  },
-  {
-    id: 9,
-    lastName: "Roxie",
-    firstName: "Harvey",
-    age: 65,
-    test: 42,
-    test2: 54,
   },
 ];
 
 export default function DataTable() {
+  const tableRef = useRef(null);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        setRows(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-      />
+    <div style={{ width: "100%" }}>
+      <DataGrid ref={tableRef} rows={rows} columns={columns} />
+      <Stack
+        direction="row"
+        justifyContent="flex-end"
+        alignItems="end"
+        height="100%"
+      >
+        <DownloadTableExcel
+          filename="users table"
+          sheet="users"
+          currentTableRef={tableRef.current}
+        >
+          <button style={{ padding: 12, width: 150, cursor: "pointer" }}>
+            Export excel
+          </button>
+        </DownloadTableExcel>
+      </Stack>
     </div>
   );
 }

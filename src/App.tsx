@@ -13,8 +13,11 @@ import { HelmetProvider } from "react-helmet-async";
 import Analytics from "./pages/analytics/Analytics";
 import Login from "./pages/login/Login";
 import Register from "./pages/sign-in/Register";
+import { useState } from "react";
 
 function App() {
+  const [isAdmin, setIsAdmin] = useState(false);
+
   return (
     <>
       <HelmetProvider>
