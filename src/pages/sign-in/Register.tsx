@@ -14,6 +14,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { AxiosInstance } from "../../common/AxiosInstance";
 import { showError, showSuccess } from "../../common/Alert";
+import { useNavigate } from "react-router-dom";
 
 const Register: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,6 +25,7 @@ const Register: FC = () => {
   const [gender, setGender] = useState("");
   const [roleId, setRoleId] = useState<number>();
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function register() {
     AxiosInstance.post("/auth/permissions", {
@@ -38,6 +40,7 @@ const Register: FC = () => {
       .then((response) => {
         if (!response.data.error) {
           showSuccess("Successfully registered");
+          navigate("/catalog");
         }
       })
       .catch((err) => {

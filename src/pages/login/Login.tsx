@@ -43,7 +43,7 @@ const Login: FC = () => {
             // setIsLoading(false);
             // sessionStorage.setItem("my_token", response.data.access_token);
             // sessionStorage.setItem("token", response.data.access_token);
-            navigate("/catalog");
+            navigate("/");
           }
         })
         .catch((err) => {
