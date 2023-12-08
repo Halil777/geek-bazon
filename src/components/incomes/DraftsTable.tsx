@@ -24,7 +24,7 @@ const DraftsTable: FC = () => {
   const dropdownMenu = (columnKey: string) => (
     <Menu
       onClick={() => handleMenuClick(columnKey)}
-      visible={menuVisible === columnKey}
+      // visible={menuVisible === columnKey}
     >
       <Space size={-10}>
         <Menu.Item key="option1">

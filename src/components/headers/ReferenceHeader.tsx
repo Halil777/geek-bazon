@@ -1,22 +1,22 @@
 import { Button, Card, Space, Typography } from "antd";
 import { FC } from "react";
 import { gridStyle } from "./headerStyle";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { setActiveReference } from "../../redux/reference/referenceSlice";
+// import { useDispatch } from "react-redux";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../../redux/store";
+// import { setActiveReference } from "../../redux/reference/referenceSlice";
 import { headerTitle } from "../../common/headerTitle";
 
 const ReferenceHeader: FC = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const activeReference = useSelector(
-    (state: RootState) => state.referenceActive.activeReference
-  );
+  // const activeReference = useSelector(
+  //   (state: RootState) => state.referenceActive.activeReference
+  // );
 
-  const handleButtonClick = (componentName: string) => {
-    dispatch(setActiveReference(componentName));
-  };
+  // const handleButtonClick = (componentName: string) => {
+  //   dispatch(setActiveReference(componentName));
+  // };
 
   return (
     <div>
@@ -24,14 +24,14 @@ const ReferenceHeader: FC = () => {
         <Space size={30}>
           <Typography style={headerTitle}>Reference Page</Typography>
           <Button
-            onClick={() => dispatch(handleButtonClick("first"))}
-            type={activeReference === "first" ? "primary" : "text"}
+          // onClick={() => dispatch(handleButtonClick("first"))}
+          // type={activeReference === "first" ? "primary" : "text"}
           >
             First Button
           </Button>
           <Button
-            onClick={() => dispatch(handleButtonClick("second"))}
-            type={activeReference === "second" ? "primary" : "text"}
+          // onClick={() => dispatch(handleButtonClick("second"))}
+          // type={activeReference === "second" ? "primary" : "text"}
           >
             Second Button
           </Button>

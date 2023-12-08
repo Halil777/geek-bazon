@@ -1,9 +1,5 @@
 import { FC } from "react";
-import {
-  ExpandAltOutlined,
-  PlusOutlined,
-  PlusSquareOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined, PlusSquareOutlined } from "@ant-design/icons";
 import { Button, Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import AddNewIncomes from "./AddNewIncome";

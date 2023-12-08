@@ -3,7 +3,7 @@
 import { FC } from "react";
 import { padding } from "../../style/common/padding";
 import IncomesSidebar from "../../components/incomes/IncomesSidebar";
-import { Button, Col, Row } from "antd";
+import { Col, Row } from "antd";
 import DraftsTable from "../../components/incomes/DraftsTable";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -38,6 +38,7 @@ const Incomes: FC = () => {
     }
   };
 
+  console.log(toggleCreateIncomes);
   return (
     <div style={padding}>
       <Row>

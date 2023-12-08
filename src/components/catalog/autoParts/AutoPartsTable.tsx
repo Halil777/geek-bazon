@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { AxiosInstance } from "../../../common/AxiosInstance";
 import { Autopart } from "./autoPartColumns";
+import { DownloadTableExcel } from "react-export-table-to-excel";
+import { Button, Stack } from "@mui/material";
+import ColumnManager from "./ColumnManager";
 
 const AutopartsTable: React.FC = () => {
+  const tableRef = useRef(null);
   const [data, setData] = useState<Autopart[]>([]);
+  const [columnManagerVisible, setColumnManagerVisible] = useState(false);
+  const [visibleColumns, setVisibleColumns] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -165,7 +171,49 @@ const AutopartsTable: React.FC = () => {
     },
   ];
 
-  return <Table columns={columns} dataSource={data} scroll={{ x: 4000 }} />;
+  const handleColumnToggle = (checkedColumns: string[]) => {
+    setVisibleColumns(checkedColumns);
+  };
+
+  return (
+    <>
+      <Stack direction="row" mt={2} mb={2} justifyContent="flex-end">
+        <Button onClick={() => setColumnManagerVisible(true)}>
+          Manage Columns
+        </Button>
+      </Stack>
+      <Table
+        ref={tableRef}
+        columns={columns.filter((column) =>
+          visibleColumns.includes(column.key as string)
+        )}
+        dataSource={data}
+        scroll={{ x: 4000 }}
+      />
+      <Stack
+        direction="row"
+        justifyContent="flex-end"
+        alignItems="end"
+        height="100%"
+      >
+        <DownloadTableExcel
+          currentTableRef={tableRef.current}
+          filename="autoparts table"
+          sheet="autoparts"
+        >
+          <button style={{ padding: 12, width: 150, cursor: "pointer" }}>
+            Export excel
+          </button>
+        </DownloadTableExcel>
+      </Stack>
+      <ColumnManager
+        columns={columns}
+        onColumnToggle={handleColumnToggle}
+        visible={columnManagerVisible}
+        onClose={() => setColumnManagerVisible(false)}
+      />
+    </>
+  );
 };
 
 export default AutopartsTable;
